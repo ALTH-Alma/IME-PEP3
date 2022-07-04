@@ -31,7 +31,7 @@ library(car)
 ################################################################################
 
 # Fijar carpeta de trabajo.
-setwd("D:/dropbox/Inferencia/Ejercicios prácticos 1-2022/EP13")
+setwd("C:/Users/Alma/Documents")
 
 # Fijar semilla.
 set.seed(1111)
@@ -65,7 +65,7 @@ datos.peso <- muestra %>% select(-c(IMC, EN))
 # Seleccionar predictores usando el método de todos los subconjuntos.
 preliminar <- regsubsets(Weight ~ ., data = datos.peso, nbest = 1, nvmax = 8,
                          method = "exhaustive")
-
+# method=c("exhaustive", "backward", "forward", "seqrep")
 plot(preliminar)
 
 # El modelo con menor BIC con entre 2 y 8 predictores incluye únicamente el
@@ -75,6 +75,7 @@ datos.peso <- datos.peso %>% select(Weight, Chest.Girth, Hip.Girth)
 # Ajustar modelo usando bootstrapping con 2999 remuestreos.
 modelo.peso <- train(Weight ~ ., data = datos.peso, method = "lm",
                      trControl = trainControl(method = "boot", number = 2999))
+#trainControl(method = "cv")
 
 print(summary(modelo.peso))
 
@@ -238,6 +239,8 @@ datos.en[["EN"]] <- NULL
 # Se pueden definir alternativas de control que guíen la búsqueda, incluyendo
 # funciones wrapper para el tipo de modelo. El paquete caret proporciona la
 # función wrapper lrFuncs para modelos de regresión logística.
+
+cat("EN evaluation")
 lrFuncs$summary <- twoClassSummary
 
 control.seleccion <- rfeControl(functions = lrFuncs, method = "LOOCV",

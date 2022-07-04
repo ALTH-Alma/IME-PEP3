@@ -36,7 +36,7 @@ library(car)
 ################################################################################
 
 # Fijar carpeta de trabajo.
-setwd("D:/dropbox/Inferencia/Ejercicios prácticos 1-2022/EP13")
+setwd("C:/Users/Alma/Documents")
 
 # Fijar semilla.
 set.seed(1111)
